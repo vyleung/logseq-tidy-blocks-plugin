@@ -2,22 +2,37 @@ import "@logseq/libs";
 
 const settings = [
   {
-    key: "keyboardShortcut",
-    title: "Keyboard shortcut to tidy block(s)",
-    description: "This is the the keyboard shortcut to tidy one block or multiple blocks (default: alt+t)",
+    key: "KeyboardShortcut_LineBreak",
+    title: "Keyboard shortcut to tidy block(s) and keep a line break",
+    description: "This is the the keyboard shortcut to tidy one block or multiple blocks and keep a line break (default: alt+t)",
     type: "string",
     default: "alt+t"
+  },
+  {
+    key: "KeyboardShortcut_RemoveAll",
+    title: "Keyboard shortcut to tidy block(s) and remove all whitespace",
+    description: "This is the the keyboard shortcut to tidy one block or multiple blocks and remove all whitespace (default: alt+r)",
+    type: "string",
+    default: "alt+r"
   }
 ]
 logseq.useSettingsSchema(settings);
+let tidy_type;
 
 // ref for traversing through a block and their children: https://gist.github.com/umidjons/6865350#file-walk-dom-js
-// ref for replacing extra spaces and tabs (1st .replace()): https://stackoverflow.com/questions/5310821/removing-space-and-retaining-the-new-line
-// ref for replacing extra line breaks (2nd .replace()): https://stackoverflow.com/questions/22962220/remove-multiple-line-breaks-n-in-javascript
 function tidy(block) {
   logseq.Editor.getBlock(block.uuid, {includeChildren: true}).then(tree_block => {
     let block_content = tree_block.content;
-    logseq.Editor.updateBlock(tree_block.uuid, block_content.trim().replace(/[ \t]{2,}/gu, " ").replace(/[\r\n]{2,}/g, "\n"));
+
+    if (tidy_type == "keep a line break") {
+      // ref for replacing extra spaces and tabs (1st .replace()): https://stackoverflow.com/questions/5310821/removing-space-and-retaining-the-new-line
+      // ref for replacing extra line breaks (2nd .replace()): https://stackoverflow.com/questions/22962220/remove-multiple-line-breaks-n-in-javascript
+      logseq.Editor.updateBlock(tree_block.uuid, block_content.trim().replace(/[ \t]{2,}/gu, " ").replace(/[\r\n]{2,}/g, "\n"));
+    }
+    else {
+      // ref for removing all whitespace: https://github.com/sindresorhus/condense-whitespace
+      logseq.Editor.updateBlock(tree_block.uuid, block_content.trim().replace(/\s{2,}/gu, " ").replace(/[\r\n]/g, " "));
+    }
 
     if (tree_block.children.length > 0) {
       let children_block = tree_block.children;
@@ -31,7 +46,7 @@ function tidy(block) {
 // tidy one selected block
 function tidySelectedBlock(e) {
   tidy(e);
-  logseq.App.showMsg("Block is tidied!");
+  logseq.UI.showMsg("Block is tidied!")
 }
 
 // tidy multiple selected blocks
@@ -41,7 +56,7 @@ function tidyMultipleSelectedBlocks() {
       tidy(selected_block);
     });
   });
-  logseq.App.showMsg("Blocks are tidied!");
+  logseq.UI.showMsg("Blocks are tidied!");
 }
 
 function tidyBlocks(e) {
@@ -52,55 +67,54 @@ function tidyBlocks(e) {
 const main = async () => {
   console.log("logseq-tidy-blocks-plugin loaded");
 
-  let keyboard_shortcut_version = 0;
-
-  // register keyboard shortcut to tidy block(s)
-  function registerKeyboardShortcut(type, version, keyboard_shortcut) {
-      logseq.App.registerCommandPalette({
-        key: `tidy-blocks-${type}-${version}`,
-        label: "Tidy block(s)",
-        keybinding: {
-          binding: keyboard_shortcut,
-          mode: "global",
-        }
-      }, async (e) => {
-        tidyBlocks(e);
-      });
-  }
-
-  // unregister keyboard shortcut to tidy block(s)
-  function unregisterKeyboardShortcut(type, version) {
-    logseq.App.unregister_plugin_simple_command(`${logseq.baseInfo.id}/tidy-blocks-${type}-${version}`);
-    
-    version++;
-  }
-
-  logseq.onSettingsChanged(updated_settings => {
-    // register default keyboard shortcut
-    if ((keyboard_shortcut_version == 0) && (updated_settings.keyboardShortcut != undefined)) {
-      registerKeyboardShortcut("keyboardShortcut", keyboard_shortcut_version, updated_settings.keyboardShortcut);
-      
-      // keyboard_shortcut_version = 0 => 1;
-      keyboard_shortcut_version++;
-    }
-    // when the keyboard shortcut is modified:
-    else {
-      // keyboard_shortcut_version = 1 => 0;
-      keyboard_shortcut_version--;
-
-      // unregister previous shortcut
-      unregisterKeyboardShortcut("keyboardShortcut", keyboard_shortcut_version);
-    }
-  });
-
-  // right click - tidy one block
-  logseq.Editor.registerBlockContextMenuItem("🧹 Tidy up", async (e) => {
+  // right click - tidy one block (keep a line break)
+  logseq.Editor.registerBlockContextMenuItem("🧹 Tidy up & keep a line break", async (e) => {
+    tidy_type = "keep a line break";
     tidySelectedBlock(e);
   });
 
-  // slash command - tidy one block
-  logseq.Editor.registerSlashCommand("🧹 Tidy up", async (e) => {
+  // slash command - tidy one block (keep a line break)
+  logseq.Editor.registerSlashCommand("🧹 Tidy up & keep a line break", async (e) => {
+    tidy_type = "keep a line break";
     tidySelectedBlock(e);
+  });
+
+  // right click - tidy one block (remove all whitespace)
+  logseq.Editor.registerBlockContextMenuItem("🧹 Tidy up & remove all whitespace", async (e) => {
+    tidy_type = "remove all whitespace";
+    tidySelectedBlock(e);
+  });
+
+  // slash command - tidy one block (remove all whitespace)
+  logseq.Editor.registerSlashCommand("🧹 Tidy up & remove all whitespace", async (e) => {
+    tidy_type = "remove all whitespace";
+    tidySelectedBlock(e);
+  });
+
+  // keyboard shortcut:  tidy block(s) and keep a line break
+  logseq.App.registerCommandPalette({
+    key: `tidy-blocks-KeyboardShortcut_LineBreak`,
+    label: "Tidy up & keep a line break",
+    keybinding: {
+      binding: logseq.settings.KeyboardShortcut_LineBreak,
+      mode: "global",
+    }
+  }, async (e) => {
+    tidy_type = "keep a line break";
+    tidyBlocks(e);
+  });
+
+  // keyboard shortcut: tidy block(s) and remove all linespaces
+  logseq.App.registerCommandPalette({
+    key: `tidy-blocks-KeyboardShortcut_RemoveAll`,
+    label: "Tidy up & remove all whitespace",
+    keybinding: {
+      binding: logseq.settings.KeyboardShortcut_RemoveAll,
+      mode: "global",
+    }
+  }, async (e) => {
+    tidy_type = "remove all whitespace";
+    tidyBlocks(e);
   });
 }
 
