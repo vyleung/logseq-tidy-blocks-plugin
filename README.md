@@ -1,24 +1,29 @@
 ## logseq-tidy-blocks-plugin
+> If you find this plugin – or any of my other [Logseq plugins](https://github.com/vyleung?tab=repositories&q=logseq&type=source) – useful and would like to support me, you can [buy me a coffee](https://www.buymeacoffee.com/vyleung) 🙂
 
 ## Features
 ### Remove whitespace from _one_ block or _multiple_ blocks in 3 ways:
 - Block context menu (right-click on bullet)
 - Slash (/) command
-- Keyboard shortcut
-    - Usage: Click on the block (as if to edit it) → Activate the keyboard shortcut (can be configured in the [settings](#settings)) 
+- Keyboard shortcuts (can be configured in the [settings](#settings)) 
+    - Usage for one block: Click on the block (as if to edit it) → Activate the keyboard shortcut
+    - Usage for multiple blocks: Click on the first block (as if to edit it) → Select blocks above (`shift+up`) or below (`shift+down`) → Activate the keyboard
+    - Demo: ![logseq-tidy-blocks-plugin keyboard shortcut demo](screenshots/logseq_tidy_blocks_keyboard_shortcut_demo.gif)
 #### Demo
 ![logseq-tidy-blocks-plugin main demo](screenshots/logseq_tidy_blocks_main_demo.gif)
 
 ### Settings
+- Each time you make changes to the plugin settings, please reload Logseq to ensure that all settings are updated  
 ![logseq-tidy-blocks-plugin settings](screenshots/logseq_tidy_blocks_settings.png)
-> 🚨 **NOTE:** If you would like to entirely change the keyboard shortcut or simply change the modifier of the shortcut (e.g. from `alt` to `ctrl`), select the existing shortcut and type the new shortcut over it. Completely deleting the existing shortcut and then typing a new shortcut will display an error
 
 ## Installation
 ### Preparation
 1. Click the 3 dots in the righthand corner → `Settings` → `Advanced` → Enable `Developer mode` and `Plug-in system`
 2. Click the 3 dots in the righthand corner → `Plugins` – OR – Use keyboard shortcut `Esc t p`
 
-### Load plugin via the marketplace (not available yet)
+### Load plugin via the marketplace (recommended)
+1. Click the 3 dots in the righthand corner → `Plugins` – OR – Use keyboard shortcut `Esc t p`
+2. Go to the `Marketplace` tab and search for `Tidy Blocks` → Click `Install`
 
 ### Load plugin manually
 1. Download the [latest release](https://github.com/vyleung/logseq-tidy-blocks-plugin/releases) of the plugin (e.g logseq-tidy-blocks-plugin-v.1.0.0.zip) from Github
@@ -31,7 +36,3 @@ MIT
 ## Credits
 - Plugin Marketplace Icon: <a href="https://www.flaticon.com/free-icons/tidy" title="tidy icons">Tidy icons created by Freepik - Flaticon</a>
 - Inspired by the [Obsidian Text Format plugin](https://github.com/Benature/obsidian-text-format)
-
-## Support
-If you find this plugin useful, consider buying me a coffee 🙂  
-<a href="https://www.buymeacoffee.com/vyleung" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;"></a>
