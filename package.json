@@ -1,7 +1,7 @@
 {
   "name": "logseq-tidy-blocks-plugin",
-  "version": "1.1.0",
-  "description": "Remove whitespace and line breaks to keep blocks nice and tidy",
+  "version": "1.2.0",
+  "description": "Remove whitespace and line breaks and hide block properties to keep blocks nice and tidy",
   "main": "dist/index.html",
   "targets": {
     "main": false
@@ -19,7 +19,8 @@
     "icon": "./icon.png"
   },
   "dependencies": {
-    "@logseq/libs": "^0.0.6"
+    "@logseq/libs": "^0.0.6",
+    "driftless": "^2.0.3"
   },
   "devDependencies": {
     "parcel": "^2.5.0"

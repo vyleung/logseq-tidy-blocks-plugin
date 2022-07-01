@@ -2,15 +2,22 @@
 > If you find this plugin – or any of my other [Logseq plugins](https://github.com/vyleung?tab=repositories&q=logseq&type=source) – useful and would like to support me, you can [buy me a coffee](https://www.buymeacoffee.com/vyleung) 🙂
 
 ## Features
-### Remove whitespace from _one_ block or _multiple_ blocks in 3 ways:
+### Remove whitespace from _one_ block or _multiple_ blocks in [3 ways](#3-ways-to-use-the-plugin)
+#### Demo
+![logseq-tidy-blocks-plugin v.1.1.0 demo](screenshots/logseq_tidy_blocks_v.1.1.0.gif)
+
+### Toggle the display of block properties in [3 ways](#3-ways-to-use-the-plugin)
+- Limitation: the display state of block properties is NOT remembered when Logseq is reloaded
+#### Demo
+![logseq-tidy-blocks-plugin v.1.2.0 demo](screenshots/logseq_tidy_blocks_v.1.2.0.gif)
+
+### 3 ways to use the plugin
 - Block context menu (right-click on bullet)
 - Slash (/) command
-- Keyboard shortcuts (can be configured in the [settings](#settings)) 
+- Keyboard shortcuts (can be configured in the [settings](#settings))
     - Usage for one block: Click on the block (as if to edit it) → Activate the keyboard shortcut
     - Usage for multiple blocks: Click on the first block (as if to edit it) → Select blocks above (`shift+up`) or below (`shift+down`) → Activate the keyboard
     - Demo: ![logseq-tidy-blocks-plugin keyboard shortcut demo](screenshots/logseq_tidy_blocks_keyboard_shortcut_demo.gif)
-#### Demo
-![logseq-tidy-blocks-plugin main demo](screenshots/logseq_tidy_blocks_main_demo.gif)
 
 ### Settings
 - Each time you make changes to the plugin settings, please reload Logseq to ensure that all settings are updated  
@@ -35,4 +42,5 @@ MIT
 
 ## Credits
 - Plugin Marketplace Icon: <a href="https://www.flaticon.com/free-icons/tidy" title="tidy icons">Tidy icons created by Freepik - Flaticon</a>
-- Inspired by the [Obsidian Text Format plugin](https://github.com/Benature/obsidian-text-format)
+- Plugin Toolbar Icon: [Material Design Icons](https://materialdesignicons.com/)
+- Plugin nspired by the [Obsidian Text Format plugin](https://github.com/Benature/obsidian-text-format)
