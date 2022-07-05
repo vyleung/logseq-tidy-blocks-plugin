@@ -7,7 +7,7 @@
 ![logseq-tidy-blocks-plugin v.1.1.0 demo](screenshots/logseq_tidy_blocks_v.1.1.0.gif)
 
 ### Toggle the display of block properties in [3 ways](#3-ways-to-use-the-plugin)
-- Limitation: the display state of block properties is NOT remembered when Logseq is reloaded
+- Limitation for manually hiding block properties is that the display state of block properties is NOT remembered when Logseq is reloaded
 #### Demo
 ![logseq-tidy-blocks-plugin v.1.2.0 demo](screenshots/logseq_tidy_blocks_v.1.2.0.gif)
 
