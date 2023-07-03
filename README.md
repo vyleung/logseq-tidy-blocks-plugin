@@ -2,7 +2,7 @@
 > If you find this plugin – or any of my other [Logseq plugins](https://github.com/vyleung?tab=repositories&q=logseq&type=source) – useful and would like to support me, you can [buy me a coffee](https://www.buymeacoffee.com/vyleung) 🙂
 
 ## Features
-### Remove whitespace from _one_ block or _multiple_ blocks in [3 ways](#3-ways-to-use-the-plugin)
+### Remove empty blocks and whitespace from _one_ block or _multiple_ blocks in [3 ways](#3-ways-to-use-the-plugin)
 #### Demo
 ![logseq-tidy-blocks-plugin v.1.1.0 demo](screenshots/logseq_tidy_blocks_v.1.1.0.gif)
 

@@ -3,6 +3,14 @@ import { setDriftlessTimeout } from "driftless";
 
 const settings = [
   {
+    key: "DeleteEmptyBlocks",
+    title: "Delete empty blocks?",
+    description: "Check the box if you would like to delete empty blocks when tidying up",
+    default: false,
+    type: "boolean",
+    enumPicker: "checkbox"
+  },
+  {
     key: "KeyboardShortcut_LineBreak",
     title: "Keyboard shortcut to tidy block(s) and keep a line break",
     description: "This is the the keyboard shortcut to tidy one block or multiple blocks and keep a line break (default: alt+t)",
@@ -58,6 +66,11 @@ function tidy(block) {
   logseq.Editor.getBlock(block.uuid, {includeChildren: true}).then(tree_block => {
     let block_content = tree_block.content;
 
+    // delete empty blocks if indicated in settings
+    if ((logseq.settings.DeleteEmptyBlocks) && (block_content == "")) {
+      logseq.Editor.removeBlock(tree_block.uuid);
+    }
+    
     if (tidy_type == "keep a line break") {
       // ref for replacing extra spaces and tabs (1st .replace()): https://stackoverflow.com/questions/5310821/removing-space-and-retaining-the-new-line
       // ref for replacing extra line breaks (2nd .replace()): https://stackoverflow.com/questions/22962220/remove-multiple-line-breaks-n-in-javascript
